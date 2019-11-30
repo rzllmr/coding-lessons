@@ -1,0 +1,45 @@
+\title{Sample Title}
+\subtitle{Sample Subtitle}
+\author{Author Name}
+\date{2019-12-24}
+\titlegraphic{\includegraphics[width=\textwidth]{images/randomart1.jpg}}
+\maketitle
+
+\changesection{First Section}{images/randomart2.jpg}{random-art.org}
+
+\begin{frame}[fragile]
+  \frametitle{Sample Page 1}
+  \codeboxt{Python}{code/main.py}{%
+    Hello World!
+  }
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sample Page 2}
+  \framesubtitle{Sample Subtitle}
+  The classic starting point:
+  \codebox{C}{code/main.c}{}
+  \begin{itemize}
+    \item \emph{int} is a type
+    \item \emph{main} is a function
+    \item \emph{return} is a statement
+  \end{itemize}
+  The rest is self explanatory...
+\end{frame}
+
+\changesection{Section After First Section}{images/randomart2.jpg}{}
+
+\begin{frame}
+  \frametitle{Sample Page 3}
+  \imageboxt[0.15]{images/randomart2.jpg}{caption}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sample Page 4}
+  \imagebox[0.15]{images/randomart2.jpg}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sample Page 5}
+  \[\frac{-b \pm \sqrt{b^2 - c}}{2a}\]
+\end{frame}

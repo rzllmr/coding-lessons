@@ -1,0 +1,261 @@
+\mode<presentation>
+
+\ProvidesPackage{plain}[Plain Beamer Theme]
+
+\RequirePackage{tikz}
+\RequirePackage[skins]{tcolorbox}
+\RequirePackage{listings}
+\RequirePackage{xstring}
+
+% COLOR THEMES
+
+\DeclareOption{default}{
+  \definecolor{shaded}{RGB}{60, 60, 60}
+  \definecolor{main}{RGB}{90, 90, 90}
+  \definecolor{contrast}{RGB}{240, 240, 240}
+  \definecolor{highlight}{RGB}{229, 151, 0}
+  \colorlet{codeboxtitle}{main}
+  \colorlet{codebox}{contrast}
+  \colorlet{title}{contrast}
+}
+
+\DeclareOption{dark}{
+  \definecolor{shaded}{RGB}{20, 20, 20}
+  \definecolor{main}{RGB}{43, 43, 45}
+  \definecolor{contrast}{RGB}{251, 251, 251}
+  \definecolor{highlight}{RGB}{1, 172, 182}
+  \colorlet{codeboxtitle}{main}
+  \colorlet{codebox}{contrast}
+  \colorlet{title}{contrast}
+}
+
+\DeclareOption{light}{
+  \definecolor{shaded}{RGB}{127, 127, 127}
+  \definecolor{main}{RGB}{242, 242, 242}
+  \definecolor{contrast}{RGB}{43, 21, 21}
+  \definecolor{highlight}{RGB}{224, 69, 86}
+  \definecolor{shadow}{RGB}{180, 180, 180}
+  \colorlet{codeboxtitle}{contrast}
+  \colorlet{codebox}{white}
+  \colorlet{title}{main}
+}
+
+% set options default value
+\ExecuteOptions{default}
+% end options section
+\ProcessOptions\relax
+
+
+\setbeamercolor*{normal text}{fg=contrast}
+\setbeamercolor*{background canvas}{bg=main}
+
+\setbeamercolor*{title}{fg=title}
+\setbeamerfont{title}{size=\huge}
+\setbeamerfont{subtitle}{size=\large}
+
+\setbeamercolor{frametitle-marker}{fg=highlight}
+\setbeamercolor{frametitle}{fg=contrast}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{framesubtitle}{size=\small}
+
+\setbeamercolor*{itemize item}{fg=contrast}
+\setbeamercolor*{itemize subitem}{fg=contrast}
+
+\setbeamercolor{framesection}{fg=highlight}
+\setbeamercolor*{page number in head/foot}{fg=contrast}
+
+\setbeamercolor{emph}{fg=highlight}
+\renewcommand<>{\emph}[1]{%
+  {\usebeamercolor[fg]{emph}#1}%
+}
+\setbeamercolor{watermark}{fg=shaded}
+\setbeamercolor{sourceurl}{fg=shaded}
+
+% INNER THEME
+
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\small}
+
+% custom title page
+\defbeamertemplate*{title page}{plain}
+{
+  \vspace{2.2cm}
+  \begin{columns}
+  \column{\dimexpr\paperwidth}
+    \begin{tcolorbox}[enhanced,height=\paperheight/2,frame hidden,interior hidden,fuzzy shadow={0mm}{0mm}{-0.5mm}{0.5mm}{shaded},sharp corners=all,valign=center,overlay={\begin{tcbclipframe}\node at (frame){\inserttitlegraphic};\end{tcbclipframe}}]
+	  {\centering
+	    \usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle
+	    \par
+	  }
+	  \vskip3mm%
+	  {\centering
+	    \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle
+	    \par
+	  }
+    \end{tcolorbox}
+    \begin{tcolorbox}[enhanced,width=\textwidth/2,flush right,boxrule=0mm,sharp corners,frame hidden,interior style={left color=main,right color=shaded}]
+      \hfill\small\usebeamercolor[fg]{author}{
+      \begin{tabular}{r|l}
+        Author & \insertauthor\\
+        Date & \insertdate
+      \end{tabular}
+      }
+    \end{tcolorbox}
+  \end{columns}
+}
+
+% insert custom slide at section change
+\AtBeginSection[]{
+  \begin{frame}[plain]
+  \vspace{6mm}
+  \small next section
+  \begin{columns}
+    \column{\dimexpr\paperwidth}
+    \begin{tcolorbox}[enhanced,height=\paperheight/2,frame hidden,interior hidden,fuzzy shadow={0mm}{0mm}{-0.5mm}{0.5mm}{shaded},sharp corners=all,valign=center,overlay={\begin{tcbclipframe}\node at (frame){\sectiongraphic};\end{tcbclipframe}}]
+	  {\centering
+	    \usebeamerfont{title}\usebeamercolor[fg]{title}\insertsection
+	    \par
+	  }
+	\end{tcolorbox}
+  \end{columns}
+  \ifx\sourceurl\empty\else
+    \hfill\usebeamercolor[fg]{sourceurl}\tiny\texttt{@\sourceurl}
+  \fi
+  \end{frame}
+}
+
+\setbeamertemplate{itemize items}[circle]
+
+% OUTER THEME
+
+\setbeamertemplate{navigation symbols}{}
+
+\newlength{\marginedPaperWidth}{\paperwidth - 0.2cm}
+
+% Frame title
+\defbeamertemplate*{frametitle}{plain}[1][]{
+  \vskip0.5cm%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=1.2cm]{frametitle}
+    \begin{tikzpicture}
+    \useasboundingbox(0,0) rectangle(\the\paperwidth,1.2);
+    {\usebeamercolor[fg]{frametitle-marker}}
+    \fill[color=frametitle-marker.fg] (0.2,0) rectangle(\the\marginedPaperWidth,1.2);
+     \ifx\insertframesubtitle\@empty%
+        {\node[anchor=west] at (0.3,0.61){\usebeamerfont{frametitle}\insertframetitle};}
+        \else%
+        {\node[anchor= west] at (0.2,0.81){\usebeamerfont{frametitle}\insertframetitle};%
+         \node[anchor= west] at (0.4,0.25){\usebeamerfont{framesubtitle}- \insertframesubtitle};}%
+        \fi
+    \end{tikzpicture}
+  \end{beamercolorbox}
+}
+
+% Footer
+\setbeamertemplate{footline}{%
+  \begin{minipage}[t]{0.5\paperwidth}
+    \begin{beamercolorbox}[wd=3cm, ht = 1cm]{page number in head/foot}
+      \ifnum\thepage>1\relax%
+        \vskip0.2cm%
+        \hskip0.3cm%
+        \insertpagenumber\,/\,\insertpresentationendpage\kern1em\vskip2pt%
+        \hfill
+      \fi
+    \end{beamercolorbox}
+  \end{minipage}
+  \begin{minipage}[t]{0.76\paperwidth}
+    \hfill
+    \begin{beamercolorbox}[wd=5cm, ht = 1cm]{page number in head/foot}
+      \hfill%
+      \usebeamercolor[fg]{framesection}\insertsection%
+      \kern0.3cm\vskip0.3cm
+    \end{beamercolorbox}
+  \end{minipage}
+}
+
+% lstlisting styling
+\lstset
+{
+    basicstyle=\small\sffamily,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    showstringspaces=false,
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=false,
+    commentstyle=\color{gray},
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
+    identifierstyle=,
+    aboveskip=0mm,
+    belowskip=0mm
+}
+
+% CUSTOM COMMANDS
+
+% shorthand for section change
+% \changesection{section}{image file}{source url}
+\newcommand{\changesection}[3]{
+  \def\sectiongraphic{\includegraphics[width=\textwidth]{#2}}
+  \def\sourceurl{#3}
+  \section{#1}
+}
+
+% custom code box with shadow
+% \codebox{language}{source file}{console output}
+\newcommand{\codebox}[3]{
+  \def\boxoutput{#3}
+  \ifx\boxoutput\empty \newcommand{\wmpos}{interior.south east} \else \newcommand{\wmpos}{segmentation.east} \fi
+
+  \begin{tcolorbox}[enhanced,colback=codebox,frame hidden,fuzzy shadow={0.2mm}{0.2mm}{0mm}{0.5mm}{shaded!50!main},left=5mm,top=1mm,bottom=1mm,sharp corners=all,underlay={\node[anchor=south east] at (\wmpos) {\usebeamercolor[fg]{watermark}#1};}]
+  \lstinputlisting[language=#1]{#2}
+  \ifx\boxoutput\empty\else
+    \tcblower
+    \boxoutput
+  \fi
+  \end{tcolorbox}
+}
+
+% custom code box with shadow and file name
+% \codeboxt{language}{source file}{console output}
+\newcommand{\codeboxt}[3]{
+  \StrCount{#2}{/}[\slashcount]
+  \StrBehind[\slashcount]{#2}{/}[\codeboxtitle]
+  \def\boxoutput{#3}
+  \ifx\boxoutput\empty \newcommand{\wmpos}{interior.south east} \else \newcommand{\wmpos}{segmentation.east} \fi
+
+  \begin{tcolorbox}[enhanced,adjusted title=\codeboxtitle,colbacktitle=codeboxtitle,colback=codebox,frame hidden,fuzzy shadow={0mm}{0mm}{0mm}{0.5mm}{shaded!50!main},left=5mm,lefttitle=1mm,top=1mm,bottom=1mm,middle=2mm,titlerule=0mm,sharp corners=all,underlay={\node[anchor=south east] at (\wmpos) {\usebeamercolor[fg]{watermark}#1};}]
+  \lstinputlisting[language=#1]{#2}
+  \ifx\boxoutput\empty\else
+    \tcblower
+    \boxoutput
+  \fi
+  \end{tcolorbox}
+}
+
+% custom image box with shadow
+% \imagebox[scale factor]{image file}
+\newcommand{\imagebox}[2][]{
+  \def\scale{#1}
+  \ifx\scale\empty \newcommand{\imagescale}{1} \else \newcommand{\imagescale}{\scale} \fi
+  {\centering
+  \begin{tcolorbox}[enhanced,size=minimal,hbox,frame hidden,fuzzy shadow={0.2mm}{0.2mm}{0mm}{0.5mm}{shaded!50!main},sharp corners=all]
+  \includegraphics[scale=\imagescale]{#2}
+  \end{tcolorbox}
+  }
+}
+
+% custom image box with shadow and caption
+% \imageboxt[scale factor]{image file}{caption}
+\newcommand{\imageboxt}[3][]{
+  \def\scale{#1}
+  \ifx\scale\empty \newcommand{\imagescale}{1} \else \newcommand{\imagescale}{\scale} \fi
+
+  {\centering
+  \begin{tcolorbox}[enhanced,adjusted title=#3,colbacktitle=codeboxtitle,hbox,frame hidden,fuzzy shadow={0.2mm}{0.2mm}{0mm}{0.5mm}{shaded!50!main},sharp corners=all,left=-1mm,right=-1mm,top=-1mm,bottom=-1mm,lefttitle=1mm,titlerule=0mm]
+  \includegraphics[scale=\imagescale]{#2}
+  \end{tcolorbox}
+  }
+}
+
+\mode<all>
