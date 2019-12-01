@@ -1,4 +1,4 @@
-# LaTeX Presentation
+# LaTeX Slides
 > An evolving template for a content-oriented presentation.
 
 To focus on the process of aggregating insights in slides all styling humps shall be cleared by a LaTeX template. This provides a custom theme for the beamer package and short commands dedicated to generate recurring elements. So that the main documents of the presentation are mostly comprised of the information alone.
