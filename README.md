@@ -1,15 +1,13 @@
-# LaTeX Slides
-> An evolving template for a content-oriented presentation.
+# Coding Lessons
+> A collection of slides with lessons learned in programming.
 
-To focus on the process of aggregating insights in slides all styling humps shall be cleared by a LaTeX template. This provides a custom theme for the beamer package and short commands dedicated to generate recurring elements. So that the main documents of the presentation are mostly comprised of the information alone.
+Intended as a collection of insights gained during programming work this gathering of slides could evolve to a full presentation of many sub-sections. Being build by the document preparation system __LaTeX__, all slides editing is heavily content focused. The styling is derived from the template project at <https://github.com/rzllmr/latex-slides>.
 
-Examples of the current default styling in a light and dark theme are displayed below:
+Examples of the current look in a light and dark theme are displayed below:
 
-![Preview: light theme](styling/plain-light.png)
+![Preview: light theme](preview-light.png)
 
-![Preview: dark theme](styling/plain-dark.png)
-
-Available styling themes are: __plain__
+![Preview: dark theme](preview-dark.png)
 
 ## Build instructions
 
@@ -19,15 +17,8 @@ The TeX distribution recommended for all platforms is [MikTeX](https://github.co
 texify --pdf --synctex=1 --clean ./presentation.tex
 ```
 
-By targeting the initial _presentation.tex_ file, the example project is compiled and stored as _presentation.pdf_.
-
-## Usage instructions
-
-1. Fork the template. (<https://github.com/rzllmr/latex-slides/fork>)
-2. Choose the styling theme in _presentation.tex_. ([here](https://github.com/rzllmr/latex-slides/blob/master/presentation.tex#L4))
-3. Replace the content of _slides/index.tex_ with your own. ([here](https://github.com/rzllmr/latex-slides/blob/master/slides/index.tex))\
-Especially for larger quantities of slides it is recommended to separate the sections to different files and include them in _slides/index.tex_.
+By targeting the initial _presentation.tex_ file, the whole project is compiled and stored as _presentation.pdf_.
 
 ## License
 
-Licensed under the [MIT license](https://github.com/rzllmr/latex-slides/blob/master/LICENSE).
+Licensed under the [MIT license](https://github.com/rzllmr/coding-lessons/blob/master/LICENSE).
